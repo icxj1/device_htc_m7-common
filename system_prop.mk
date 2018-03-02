@@ -63,7 +63,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.baseband.arch=mdm \
     ro.telephony.call_ring.multiple=0 \
-    persist.radio.apm_sim_not_pwdn=1 \
     ro.telephony.ril_class=HTCQualcommRIL
 
 # Time services
