@@ -80,7 +80,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # WiFi
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=150
+    wifi.supplicant_scan_interval=15
 
 # Enable Wifi calling
 PRODUCT_PROPERTY_OVERRIDES += \
