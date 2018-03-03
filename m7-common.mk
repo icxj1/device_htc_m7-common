@@ -36,6 +36,7 @@ TARGET_SCREEN_WIDTH := 1080
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
+    frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
     frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
@@ -119,7 +120,7 @@ WITH_LINEAGE_CHARGER := false
 
 # GPS
 PRODUCT_PACKAGES += \
-    libgps.utils \
+    android.hardware.gnss@1.0-impl \
     gps.msm8960
 
 PRODUCT_COPY_FILES += \
@@ -183,6 +184,10 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service \
     android.hardware.drm@1.0-service.widevine
+
+# Ir
+PRODUCT_PACKAGES += \
+    android.hardware.ir@1.0-impl
 
 # RenderScript
 PRODUCT_PACKAGES += \
