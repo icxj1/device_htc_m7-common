@@ -743,9 +743,75 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
     unsolResponseIndex = unsolResponse - RIL_UNSOL_RESPONSE_BASE;
 
     if ((unsolResponseIndex < 0)
-        || (unsolResponseIndex >= (int32_t)NUM_ELEMS(s_unsolResponses))) {
-        RLOGE("unsupported unsolicited response code %d", unsolResponse);
-        return;
+            || (unsolResponseIndex >= (int32_t)NUM_ELEMS(s_unsolResponses))) {
+        /*
+         * catching HTC custom responses and mapping them directly to the ril_unsol_commands array
+         * before giving up on an unsupported response
+         *
+         * don't forget to update indices when changing something!
+         */
+        switch (unsolResponse) {
+            case RIL_UNSOL_ENTER_LPM_M7:
+                unsolResponse = RIL_UNSOL_ENTER_LPM;
+                break;
+            case RIL_UNSOL_CDMA_3G_INDICATOR_M7:
+                unsolResponse = RIL_UNSOL_CDMA_3G_INDICATOR;
+                break;
+            case RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR_M7:
+                unsolResponse = RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR;
+                break;
+            case RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL_M7:
+                unsolResponse = RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL;
+                break;
+            case RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE_M7:
+                unsolResponse = RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE;
+                break;
+            case RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED_M7:
+                unsolResponse = RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED;
+                break;
+            case RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED_HTC:
+                unsolResponse = RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED;
+                break;
+            default:
+                break;
+        }
+
+        int htc_base = 49;
+        switch (unsolResponse) {
+            case RIL_UNSOL_ENTER_LPM:
+                unsolResponseIndex = htc_base + 0;
+                break;
+            case RIL_UNSOL_CDMA_3G_INDICATOR:
+                unsolResponseIndex = htc_base + 1;
+                break;
+            case RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR:
+                unsolResponseIndex = htc_base + 2;
+                break;
+            case RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL:
+                unsolResponseIndex = htc_base + 3;
+                break;
+            case RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE:
+                unsolResponseIndex = htc_base + 4;
+                break;
+            case RIL_UNSOL_RESPONSE_VOICE_RADIO_TECH_CHANGED:
+                unsolResponseIndex = htc_base + 5;
+                break;
+            case RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED:
+                unsolResponseIndex = htc_base + 6;
+                break;
+            case RIL_UNSOL_SECTOR_ID_IND:
+                unsolResponseIndex = htc_base + 7;
+                break;
+            case RIL_UNSOL_TPMR_ID:
+                unsolResponseIndex = htc_base + 8;
+                break;
+            case RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED:
+                unsolResponseIndex = unsolResponse - RIL_UNSOL_RESPONSE_BASE;
+                break;
+            default:
+                RLOGE("unsupported unsolicited response code %d", unsolResponse);
+                return;
+        }
     }
 
     // Grab a wake lock if needed for this reponse,
