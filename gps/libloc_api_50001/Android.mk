@@ -1,19 +1,20 @@
+ifneq ($(BUILD_TINY_ANDROID),true)
+#Compile this library only for builds with the latest modem image
+
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libloc_adapter
 
-LOCAL_PROPRIETARY_MODULE := true
-
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_SHARED_LIBRARIES := \
     libutils \
     libcutils \
+    libgps.utils \
     libdl \
-    liblog \
-    libgps.utils
+    liblog
 
 LOCAL_SRC_FILES += \
     loc_eng_log.cpp \
@@ -24,6 +25,14 @@ LOCAL_CFLAGS += \
      -D_ANDROID_
 
 LOCAL_CFLAGS += -DFEATURE_IPV6
+
+ifeq ($(FEATURE_DELEXT), true)
+LOCAL_CFLAGS += -DFEATURE_DELEXT
+endif #FEATURE_DELEXT
+
+ifeq ($(FEATURE_ULP), true)
+LOCAL_CFLAGS += -DFEATURE_ULP
+endif #FEATURE_ULP
 
 LOCAL_C_INCLUDES:= \
     $(TARGET_OUT_HEADERS)/gps.utils
@@ -40,13 +49,13 @@ LOCAL_COPY_HEADERS:= \
    loc_eng_msg_id.h \
    loc_eng_log.h
 
+LOCAL_PRELINK_MODULE := false
+
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libloc_eng
-
-LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_MODULE_TAGS := optional
 
@@ -78,17 +87,21 @@ LOCAL_CFLAGS += \
 
 LOCAL_CFLAGS += -DFEATURE_IPV6
 
+ifeq ($(FEATURE_ULP), true)
+LOCAL_CFLAGS += -DFEATURE_ULP
+endif #FEATURE_ULP
+
 LOCAL_C_INCLUDES:= \
     $(TARGET_OUT_HEADERS)/gps.utils \
-    $(LOCAL_PATH)/gps/ulp/inc
+    hardware/qcom/gps/loc_api/ulp/inc
+
+LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := gps.$(TARGET_BOARD_PLATFORM)
-
-LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_MODULE_TAGS := optional
 
@@ -115,8 +128,11 @@ LOCAL_CFLAGS += -DFEATURE_IPV6
 ## Includes
 LOCAL_C_INCLUDES:= \
     $(TARGET_OUT_HEADERS)/gps.utils \
-    $(LOCAL_PATH)/gps/ulp/inc
+    hardware/qcom/gps/loc_api/ulp/inc
 
+LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE_RELATIVE_PATH := hw
 
 include $(BUILD_SHARED_LIBRARY)
+
+endif # not BUILD_TINY_ANDROID

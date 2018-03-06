@@ -30,7 +30,7 @@
 #define LOG_NDDEBUG 0
 #define LOG_TAG "LocSvc_afw"
 
-#include "gps.h"
+#include <hardware/gps.h>
 #include <dlfcn.h>
 #include <loc_eng.h>
 #include <loc_log.h>
@@ -109,9 +109,8 @@ static int  loc_agps_closed();
 static int  loc_agps_open_failed();
 #endif
 static int  loc_agps_set_server(AGpsType type, const char *hostname, int port);
-#ifdef FEATURE_IPV6
 static int  loc_agps_open_with_apn_type(const char* apn, ApnIpType bearerType);
-#endif
+
 static const AGpsInterface sLocEngAGpsInterface =
 {
    sizeof(AGpsInterface),
@@ -119,10 +118,8 @@ static const AGpsInterface sLocEngAGpsInterface =
    loc_agps_open,
    loc_agps_closed,
    loc_agps_open_failed,
-   loc_agps_set_server
-#ifdef FEATURE_IPV6
-   ,loc_agps_open_with_apn_type
-#endif
+   loc_agps_set_server,
+   loc_agps_open_with_apn_type
 };
 
 static int loc_xtra_init(GpsXtraCallbacks* callbacks);
