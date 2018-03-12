@@ -109,7 +109,6 @@ PRODUCT_PACKAGES += \
     camera.device@1.0-impl \
     camera.msm8960 \
     libcamera_shim \
-    Snap \
     Camera2
 
 # Lights
