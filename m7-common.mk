@@ -34,6 +34,7 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Permissions
 PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
@@ -62,8 +63,9 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-impl \
-    power.msm8960
+     android.hardware.power@1.0-service-qti
+#    android.hardware.power@1.0-impl \
+#    power.msm8960
 
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
@@ -107,7 +109,8 @@ PRODUCT_PACKAGES += \
     camera.device@1.0-impl \
     camera.msm8960 \
     libcamera_shim \
-    Snap
+    Snap \
+    Camera2
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -241,7 +244,7 @@ PRODUCT_COPY_FILES += \
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
-    android.hardware.sensors@1.0-service
+    android.hardware.biometrics.fingerprint@2.1-impl 
 
 # Thermal
 PRODUCT_PACKAGES += \
