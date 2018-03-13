@@ -108,8 +108,8 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     camera.device@1.0-impl \
     camera.msm8960 \
-    libcamera_shim \
-    Camera2
+    libcamera_shim
+#    Snap
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -183,8 +183,7 @@ PRODUCT_PACKAGES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.0-service.widevine
+    android.hardware.drm@1.0-service
 
 # Ir
 PRODUCT_PACKAGES += \
