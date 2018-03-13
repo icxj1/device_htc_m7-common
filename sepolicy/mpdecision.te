@@ -7,9 +7,13 @@ type_transition mpdecision system_data_file:file mpctl_data_file;
 
 unix_socket_connect(mpdecision, thermal, thermal-engine)
 
-allow mpdecision sysfs:file rw_file_perms;
 allow mpdecision system_data_file:dir w_dir_perms;
+allow mpdecision sysfs:file rw_file_perms;
+
+allow mpdecision mediaserver:dir search;
+allow mpdecision mediaserver:file { read open };
 
 r_dir_file(mpdecision, mediaserver)
 r_dir_file(mpdecision, cameraserver)
+r_dir_file(mpdecision, audioserver)
 r_dir_file(mpdecision, domain)
