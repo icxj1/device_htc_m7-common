@@ -22,8 +22,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.cam.hw.version=m7 \
     camera2.portability.force_api=1 \
     media.stagefright.legacyencoder=true \
-    media.stagefright.less-secure=true \
-    camera.disable_treble=true
+    media.stagefright.less-secure=true
+#    camera.disable_treble=true
 
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
